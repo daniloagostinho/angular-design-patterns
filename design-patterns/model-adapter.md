@@ -9,19 +9,19 @@ Isso seria trabalhoso, propenso a erros e difícil de manter.
 Com um Model Adapter, essa mudança pode ser feita em um único lugar. O adapter mapeia a nova propriedade subject do backend para a propriedade title usada no frontend, garantindo que todas as partes do código continuem funcionando sem precisar modificar cada uma delas individualmente.
 Exemplo de Implementação do Model Adapter no Angular
 
-1. Criando a Interface do Modelo do Frontend
+### 1. Criando a Interface do Modelo do Frontend
 
-``bash
+```typescript
     export interface Expense {
     id: number;
     title: string;
     amount: number;
     }
-``
+```
 
-2. Criando o Adapter (expense.adapter.ts)
+### 2. Criando o Adapter (expense.adapter.ts)
 
-``bash
+```typescript
     export class ExpenseAdapter {
     static fromApi(apiExpense: any): Expense {
         return {
@@ -31,11 +31,11 @@ Exemplo de Implementação do Model Adapter no Angular
         };
     }
     }
-``
+```
 
-3. Usando o Adapter ao Receber os Dados da API
+### 3. Usando o Adapter ao Receber os Dados da API
 
-``bash
+```bash
     import { HttpClient } from '@angular/common/http';
     import { Injectable } from '@angular/core';
     import { Observable } from 'rxjs';
@@ -57,7 +57,7 @@ Exemplo de Implementação do Model Adapter no Angular
         );
     }
     }
-``
+```
 
 ### Benefícios do Model Adapter
 
