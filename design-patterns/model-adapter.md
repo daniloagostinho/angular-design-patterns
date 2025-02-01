@@ -12,51 +12,51 @@ Exemplo de Implementação do Model Adapter no Angular
 ### 1. Criando a Interface do Modelo do Frontend
 
 ```typescript
-    export interface Expense {
-    id: number;
-    title: string;
-    amount: number;
-    }
+export interface Expense {
+  id: number;
+  title: string;
+  amount: number;
+}
 ```
 
 ### 2. Criando o Adapter (expense.adapter.ts)
 
 ```typescript
-    export class ExpenseAdapter {
-    static fromApi(apiExpense: any): Expense {
-        return {
-        id: apiExpense.id,
-        title: apiExpense.subject, // Mapeando 'subject' do backend para 'title' no frontend
-        amount: apiExpense.value,
-        };
-    }
-    }
+export class ExpenseAdapter {
+  static fromApi(apiExpense: any): Expense {
+    return {
+      id: apiExpense.id,
+      title: apiExpense.subject, // Mapeando 'subject' do backend para 'title' no frontend
+      amount: apiExpense.value,
+    };
+  }
+}
 ```
 
 ### 3. Usando o Adapter ao Receber os Dados da API
 
 ```bash
-    import { HttpClient } from '@angular/common/http';
-    import { Injectable } from '@angular/core';
-    import { Observable } from 'rxjs';
-    import { map } from 'rxjs/operators';
-    import { Expense } from '../models/expense.model';
-    import { ExpenseAdapter } from '../adapters/expense.adapter';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { Expense } from "../models/expense.model";
+import { ExpenseAdapter } from "../adapters/expense.adapter";
 
-    @Injectable({
-    providedIn: 'root',
-    })
-    export class ExpensesService {
-    private apiUrl = 'https://api.example.com/expenses';
+@Injectable({
+  providedIn: "root",
+})
+export class ExpensesService {
+  private apiUrl = "https://api.example.com/expenses";
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getExpenses(): Observable<Expense[]> {
-        return this.http.get<any[]>(this.apiUrl).pipe(
-        map((apiExpenses) => apiExpenses.map(ExpenseAdapter.fromApi)) // Convertendo os dados
-        );
-    }
-    }
+  getExpenses(): Observable<Expense[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map((apiExpenses) => apiExpenses.map(ExpenseAdapter.fromApi)) // Convertendo os dados
+    );
+  }
+}
 ```
 
 ### Benefícios do Model Adapter
